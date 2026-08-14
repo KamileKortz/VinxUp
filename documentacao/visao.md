@@ -24,10 +24,8 @@ O projeto propõe um aplicativo que auxilia no enfrentamento gradual dessas situ
 Disponibilizar uma aplicação que permita:
 
 - cadastrar contas de responsáveis e crianças vinculadas;
-- cadastrar o nível inicial de ansiedade do usuário;
 - propor desafios sociais progressivos;
-- monitorar o nível de ansiedade antes e depois das interações;
-- registrar situações sociais diárias enfrentadas;
+- monitorar o nível de ansiedade depois das atividades;
 - exibir histórico e evolução do usuário ao longo do tempo;
 - permitir que responsáveis acompanhem o progresso da criança.
 
@@ -43,16 +41,12 @@ Disponibilizar uma aplicação que permita:
 - Buscam ferramentas para acompanhar e auxiliar a criança;
 - Querem visualizar progresso, evolução e padrões de comportamento.
 
-### Persona 3 — Profissionais da área (psicólogos/educadores)
-- Precisam de dados simples para acompanhar evolução de pacientes;
-- Valorizam registros organizados e acompanhamento contínuo.
-
 ---
 
 ## 4. Proposta de valor
 
 - Intervenção gradual: desafios sociais progressivos;
-- Acompanhamento contínuo: registro de ansiedade antes e depois;
+- Acompanhamento contínuo: registro de ansiedade depois das atividades;
 - Participação dos responsáveis: monitoramento do progresso da criança;
 - Visualização de evolução: histórico e gráficos simples;
 - Base científica: uso de conceitos da terapia cognitivo-comportamental.
@@ -69,18 +63,14 @@ Disponibilizar uma aplicação que permita:
 - Um responsável pode acompanhar uma ou mais crianças.
 
 #### Perfil e configuração
-- Definição do nível inicial de ansiedade da criança.
+- Personalização do "personagem amigo" da criança.
 
 #### Desafios sociais
 - Lista de atividades organizadas por nível de ansiedade;
 - Progressão conforme desempenho do usuário.
 
-#### Registro de atividade
-- Registro diário de interações sociais;
-
 Campos mínimos do registro:
 - data (padrão “hoje”, editável);
-- nível de ansiedade antes;
 - nível de ansiedade depois;
 - descrição da situação (opcional).
 
@@ -97,12 +87,8 @@ Campos mínimos do registro:
 
 ### 5.2 Fora do escopo do MVP (evoluções)
 
-- Sistema de recompensas e gamificação;
 - Exportação de relatórios em PDF;
-- Uso de escalas psicológicas completas (ex: LSAS);
 - Algoritmos avançados de personalização;
-- Integração com profissionais da saúde;
-- Ferramentas de autorregulação (ex: respiração guiada);
 - Controle parental avançado.
 
 ---
@@ -111,9 +97,8 @@ Campos mínimos do registro:
 
 - Responsável cria uma conta;
 - Responsável cadastra a criança vinculada;
-- Usuário informa o nível inicial de ansiedade;
 - O sistema apresenta desafios adequados;
 - Usuário realiza um desafio;
-- O sistema registra ansiedade antes e depois;
+- O sistema registra nível ansiedade;
 - Responsável acompanha o progresso;
 - Usuário consulta histórico.

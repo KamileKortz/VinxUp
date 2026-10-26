@@ -1,7 +1,8 @@
+export type TipoUsuario = 'responsavel' | 'usuario';
+
 export type Usuario = {
   id: string;
   nome: string;
   email: string;
-  dataNascimento: string;
-  senha: string;
+  tipo: TipoUsuario;
 };

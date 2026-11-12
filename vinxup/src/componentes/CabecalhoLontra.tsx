@@ -1,11 +1,12 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, Text, View } from 'react-native';
+
+import { cores } from '../utils/tema';
 
 type CabecalhoLontraProps = {
-  nomeUsuario: string;
+  texto: string;
 };
 
-export default function CabecalhoLontra({ nomeUsuario }: CabecalhoLontraProps) {
+export default function CabecalhoLontra({ texto }: CabecalhoLontraProps) {
   return (
     <View style={estilos.container}>
       <Image
@@ -14,7 +15,7 @@ export default function CabecalhoLontra({ nomeUsuario }: CabecalhoLontraProps) {
         resizeMode="contain"
       />
       <View style={estilos.balao}>
-        <Text style={estilos.textoBalao}>Olá, {nomeUsuario}!</Text>
+        <Text style={estilos.textoBalao}>{texto}</Text>
       </View>
     </View>
   );
@@ -34,17 +35,18 @@ const estilos = StyleSheet.create({
     zIndex: 2,
   },
   balao: {
-    backgroundColor: '#FBE492',
-    borderColor: '#3B729F',
+    backgroundColor: cores.amarelo,
+    borderColor: cores.azul,
     borderWidth: 2.5,
     borderRadius: 25,
     paddingVertical: 10,
     paddingHorizontal: 24,
     justifyContent: 'center',
+    flexShrink: 1,
   },
   textoBalao: {
     fontSize: 20,
     fontWeight: '800',
-    color: '#1C2A3A',
+    color: cores.texto,
   },
 });

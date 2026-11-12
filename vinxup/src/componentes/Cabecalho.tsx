@@ -1,5 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
+import { cores } from '../utils/tema';
+
 type CabecalhoProps = {
   titulo: string;
   subtitulo?: string;
@@ -18,17 +20,15 @@ const estilos = StyleSheet.create({
   container: {
     paddingVertical: 16,
     paddingHorizontal: 20,
-    borderBottomWidth: 1,
-    borderBottomColor: '#E0E0E0',
   },
   titulo: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#222',
+    fontSize: 26,
+    fontWeight: '800',
+    color: cores.texto,
   },
   subtitulo: {
     fontSize: 14,
-    color: '#666',
+    color: cores.textoSuave,
     marginTop: 4,
   },
 });

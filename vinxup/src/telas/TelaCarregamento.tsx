@@ -1,20 +1,24 @@
-import React, { useEffect } from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
 import { router } from 'expo-router';
+import { useEffect } from 'react';
+import { Image, StyleSheet, Text, View } from 'react-native';
+
+import { getUsuarioLogado, rotaInicial } from '../services/SessaoService';
+import { cores } from '../utils/tema';
 
 export default function TelaCarregamento() {
   useEffect(() => {
-    // Simula o tempo de carregamento inicial do aplicativo
-    const timer = setTimeout(() => {
-      router.replace('/login');
+    // Quando esta tela monta, o portão de sessão (app/_layout.tsx) já resolveu
+    // se existe alguém logado: se existir, vai direto para a tela do seu tipo.
+    const temporizador = setTimeout(() => {
+      const usuario = getUsuarioLogado();
+      router.replace(usuario ? rotaInicial(usuario) : '/login');
     }, 2500);
-    return () => clearTimeout(timer);
+    return () => clearTimeout(temporizador);
   }, []);
 
   return (
     <View style={estilos.container}>
-      {/* Moldura / Card Principal */}
-      <View style={estilos.cardLogo}>
+      <View style={estilos.cartaoLogo}>
         <Text style={estilos.titulo}>VinxUp</Text>
         <View style={estilos.pontosContainer}>
           <View style={estilos.ponto} />
@@ -23,7 +27,6 @@ export default function TelaCarregamento() {
           <View style={estilos.ponto} />
         </View>
 
-        {/* Mascotinha Lontra no Canto Inferior Direito */}
         <Image
           source={require('../../assets/VinxUp.png')}
           style={estilos.lontra}
@@ -41,23 +44,18 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  cardLogo: {
+  cartaoLogo: {
     width: '80%',
-    backgroundColor: '#3B729F',
+    maxWidth: 420,
+    backgroundColor: cores.azul,
     borderRadius: 24,
     paddingVertical: 36,
     paddingHorizontal: 20,
     alignItems: 'center',
-    position: 'relative',
     elevation: 4,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.15,
-    shadowRadius: 8,
   },
   titulo: {
     fontSize: 52,
-    fontFamily: 'System',
     fontWeight: '600',
     color: '#FFF8DC',
     letterSpacing: 1,
@@ -72,7 +70,7 @@ const estilos = StyleSheet.create({
     width: 12,
     height: 12,
     borderRadius: 6,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: cores.branco,
   },
   lontra: {
     width: 85,

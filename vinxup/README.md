@@ -1,28 +1,43 @@
-# VinxUp — código base
+# VinxUp (aplicativo)
 
-Base do aplicativo VinxUp (React Native + Expo Router + TypeScript + Firebase/Firestore).
-
-## O que já vem pronto
-
-- Rotas (`app/`): login (`index`), `cadastro` e `inicio`
-- Telas (`src/telas/`): `TelaLogin`, `TelaCadastro`, `TelaInicio` (placeholder com botão Sair)
-- Services (`src/services/`): `firebase.ts`, `UsuarioService.ts` (cadastro e busca por credenciais), `SessaoService.ts` (usuário logado em memória)
-- `src/componentes/Cabecalho.tsx`, `src/types/Usuario.ts`, `src/utils/alerta.ts` (alerta que funciona na web e no celular)
+React Native + Expo Router + TypeScript + Firebase (Auth e Firestore), seguindo a estrutura das aulas (SDK 54, `app/` só com rotas, telas em `src/telas/`, acesso a dados em `src/services/`).
 
 ## Como rodar
 
 1. `npm install`
-2. Copie `.env.example` para `.env` e preencha com as credenciais do **seu** projeto Firebase
-3. Ative o Firestore no console do Firebase
-4. `npm start` (ou `npm run web` / `npm run android` / `npm run ios`)
+2. Copie `.env.example` para `.env` e preencha com as credenciais do **seu** projeto Firebase (Console do Firebase > Configurações do projeto > Seus apps > Web). Se você já tinha um `.env`, é só copiá-lo para esta pasta.
+3. No console do Firebase:
+   - **Authentication > Sign-in method:** ative **Email/Password**.
+   - **Firestore Database:** crie o banco, se ainda não existir.
+   - **Firestore > Regras:** cole o conteúdo de `firestore.rules` e publique. **Esse passo é o que garante que o responsável não consegue ler o conteúdo privado da criança.**
+4. `npx expo start --clear` (use `--clear` sempre que mexer no `.env`).
 
-## Como adicionar uma nova funcionalidade
+## Roteiro de teste
 
-1. Crie o tipo em `src/types/`
-2. Crie o service em `src/services/` (use `db` de `firebase.ts`)
-3. Crie a tela em `src/telas/`
-4. Crie o arquivo de rota em `app/` exportando a tela e registre em `app/_layout.tsx`
+1. Em "Sou responsável", clique em **Cadastre-se** e crie a conta (cai no Painel).
+2. No Painel, **Cadastrar criança** (email e senha da criança).
+3. **Sair** e entrar em "Sou usuário" com o email e a senha da criança.
+4. Faça a atividade 1 da trilha (responda as perguntas, escolha o sentimento). Para testar o aviso, responda "Nervosismo enorme" em tudo.
+5. **Sair**, entre como responsável e abra a criança no Painel: aparecem atividades concluídas, nível de ansiedade e último acesso, mas **não** as respostas, anotações nem o Amigo.
+6. Para testar o vínculo de um segundo responsável: crie outro responsável e use **Vincular com código** (o código aparece no Perfil da criança e na tela de acompanhamento).
 
-## Atenção
+## Estrutura
 
-- A senha é salva em texto puro no Firestore (herança do projeto de aula). Antes de lidar com dados reais, migre para o Firebase Authentication.
+```text
+app/                       # rotas (só pontes para as telas)
+src/
+├── componentes/           # BalaoLontra, BarraNavegacao, AlertaAnsiedade, ...
+├── telas/                 # uma tela por arquivo
+├── services/              # firebase, sessão, usuário, vínculo, progresso, diário, amigo, acesso, trilha
+├── types/                 # Usuario, Vinculo, Progresso, Diario, Amigo, Atividade, ...
+└── utils/                 # alerta, ansiedade (pontuação), datas, tema
+firestore.rules            # regras de segurança (publicar no console)
+```
+
+## Pontos de atenção
+
+- **Pontuação e limite de alerta:** estão em `src/utils/ansiedade.ts` (0 a 3 pontos por pergunta; alerta a partir de 50% da pontuação máxima, espelhando o corte do mini-SPIN). São valores iniciais: valide o ponto de corte com a orientadora/psicóloga. O app não faz diagnóstico.
+- **Conteúdo das atividades** (`src/services/TrilhaService.ts`) é de exemplo, para revisão.
+- **Contas antigas:** documentos de `usuarios` criados na versão anterior (com senha gravada no Firestore) não têm conta no Firebase Auth. Apague-os no console e cadastre de novo.
+- **Cadastro de criança:** se a criança for criada mas o vínculo falhar (ex.: queda de internet), o email dela fica "em uso". Nesse caso, apague a conta em Authentication no console e tente de novo.
+- O código de vínculo é gerado com `Math.random` (suficiente para protótipo; use geração segura antes de produção).

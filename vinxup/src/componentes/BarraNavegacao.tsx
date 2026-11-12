@@ -1,38 +1,36 @@
-import React from 'react';
-import { View, TouchableOpacity, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+
+import { cores } from '../utils/tema';
+
+type Aba = 'trilha' | 'historico' | 'perfil';
 
 type BarraNavegacaoProps = {
-  abaAtiva?: string;
-  onNavegar?: (aba: string) => void;
+  abaAtiva: Aba;
 };
 
-export default function BarraNavegacao({ abaAtiva = 'home', onNavegar }: BarraNavegacaoProps) {
+const ABAS: { aba: Aba; emoji: string; rota: string }[] = [
+  { aba: 'trilha', emoji: '🏠', rota: '/trilha' },
+  { aba: 'historico', emoji: '🕒', rota: '/historico' },
+  { aba: 'perfil', emoji: '👤', rota: '/perfil' },
+];
+
+export default function BarraNavegacao({ abaAtiva }: BarraNavegacaoProps) {
   return (
     <View style={estilos.container}>
-      <TouchableOpacity style={estilos.botaoIcone} onPress={() => onNavegar?.('home')}>
-        <View style={estilos.circuloIcone}>
-          <Ionicons name="home-outline" size={28} color="#FBE492" />
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={estilos.botaoIcone} onPress={() => onNavegar?.('livros')}>
-        <View style={estilos.circuloIcone}>
-          <Ionicons name="book-outline" size={28} color="#FBE492" />
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={estilos.botaoIcone} onPress={() => onNavegar?.('historico')}>
-        <View style={estilos.circuloIcone}>
-          <Ionicons name="time-outline" size={28} color="#FBE492" />
-        </View>
-      </TouchableOpacity>
-
-      <TouchableOpacity style={estilos.botaoIcone} onPress={() => onNavegar?.('perfil')}>
-        <View style={estilos.circuloIcone}>
-          <Ionicons name="person-outline" size={28} color="#FBE492" />
-        </View>
-      </TouchableOpacity>
+      {ABAS.map((item) => (
+        <TouchableOpacity
+          key={item.aba}
+          style={estilos.botaoIcone}
+          onPress={() => {
+            if (item.aba !== abaAtiva) router.replace(item.rota);
+          }}
+        >
+          <View style={[estilos.circuloIcone, item.aba === abaAtiva && estilos.circuloAtivo]}>
+            <Text style={estilos.emoji}>{item.emoji}</Text>
+          </View>
+        </TouchableOpacity>
+      ))}
     </View>
   );
 }
@@ -42,7 +40,7 @@ const estilos = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: '#98C5E9',
+    backgroundColor: cores.azulClaro,
     paddingVertical: 12,
     paddingHorizontal: 16,
     borderTopLeftRadius: 20,
@@ -55,10 +53,17 @@ const estilos = StyleSheet.create({
     width: 50,
     height: 50,
     borderRadius: 25,
-    backgroundColor: '#3B729F',
+    backgroundColor: cores.azul,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
-    borderColor: '#FBE492',
+    borderColor: cores.amarelo,
+  },
+  circuloAtivo: {
+    backgroundColor: cores.amarelo,
+    borderColor: cores.azul,
+  },
+  emoji: {
+    fontSize: 24,
   },
 });
